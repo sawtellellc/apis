@@ -1,0 +1,4 @@
+Sawtelle LLC hereby using below EULA as the Model Package EULA.
+
+Standard Contract for AWS Marketplace v2 (2019-04-24)
+https://s3.amazonaws.com/EULA/Standard+Contract+for+AWS+Marketplace+2019-04-24.pdf
