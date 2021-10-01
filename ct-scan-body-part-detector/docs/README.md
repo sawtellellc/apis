@@ -18,7 +18,7 @@
 
 ### AWS Sagemaker <a name="api-sagemaker"></a>
 
-+ click below link for a sample jupyter notebook.
++ [example jupyter notebook](../ct-scan-body-part-detector.ipynb) for creating and using the endpoint model.
 
 ### AWS CLI - Nifti file <a name="api-awscli-s3"></a>
 
