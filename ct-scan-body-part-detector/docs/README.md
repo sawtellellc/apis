@@ -29,14 +29,14 @@
 #!/bin/bash
 export ENDPOINTNAME=$1
 export S3_URI=$2
-
 export MYJSON='{"s3_uri":"'${S3_URI}'"}'
+
 aws sagemaker-runtime invoke-endpoint \
   --endpoint-name "$ENDPOINTNAME" \
   --content-type "application/json" \
   --cli-binary-format raw-in-base64-out \
   --body ${MYJSON} \
-  --out output.json
+  output.json
 
 cat output.json
 ```
@@ -58,9 +58,9 @@ export FILEPATH=$2
 
 aws sagemaker-runtime invoke-endpoint \
   --endpoint-name "$ENDPOINTNAME" \
-  --content-type "application/dicom" \
+  --content-type "application/niigz" \
   --body "fileb://$FILEPATH" \
-  --out output.json
+  output.json
 
 cat output.json
 ```
@@ -80,14 +80,15 @@ bash inference.sh myendpoint s3://myawsregion.1234/images.nii.gz
 #!/bin/bash
 export ENDPOINTURL=$1
 export S3URI=$2
+export MYJSON='{"s3_uri":"'${S3URI}'"}'
 
-export myjson='{"s3_uri":"'${S3URI}'"}'
 curl --header "Content-Type: application/json" \
   --request POST \
-  --data ${myjson} \
+  --data ${MYJSON} \
+  --out output.json \
   ${ENDPOINTURL}/invocations
 
-
+cat output.json
 ```
 
 + sample inference command is provided below, replace `localhost:8080` and `s3://myawsregion.1234/images.nii.gz` with model endpoint url and a valid s3 uri to a compressed Nfti file (ext `.nii.gz`).
@@ -105,10 +106,14 @@ bash inference.sh localhost:8080 s3://myawsregion.1234/images.nii.gz
 #!/bin/bash
 export ENDPOINTURL=$1
 export FILEPATH=$2
+
 curl -X POST \
   --header "Content-Type: application/niigz" \
-  --data-binary @${FILEPATH} ${ENDPOINTURL}/invocations
+  --data-binary @${FILEPATH} \
+  --out output.json \
+  ${ENDPOINTURL}/invocations
 
+cat output.json
 ```
 
 + sample inference command is provided below, replace `localhost:8080` and `images.nii.gz` with model endpoint url and a valid path to a compressed Nfti file (ext `.nii.gz`).
